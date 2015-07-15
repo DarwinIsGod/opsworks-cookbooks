@@ -38,8 +38,10 @@
   IncludeOptional <%= @params[:rewrite_config] %>*
   <% end -%>
 
-  <% @environment.each do |key, value| %>
-  SetEnv "<%= key %>" "<%= value %>"
+  <% if !@environment.respond_to?('each') -%>
+    <% @environment.each do |key, value| %>
+    SetEnv "<%= key %>" "<%= value %>"
+    <% end -%>
   <% end %>
 
   <% if @params[:mounted_at] -%>
