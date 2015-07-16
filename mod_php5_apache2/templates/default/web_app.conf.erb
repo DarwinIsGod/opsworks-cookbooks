@@ -118,5 +118,7 @@
   <% else -%>
   IncludeOptional <%= @params[:local_config] %>-ssl*
   <% end -%>
+  
+  ProxyPassMatch ^/(.*\.php(/.*)?)$ fcgi://127.0.0.1:9000<%= @params[:docroot] %>$1
 </VirtualHost>
 <% end -%>
