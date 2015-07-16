@@ -239,6 +239,7 @@ include_recipe 'apache2::mod_log_config' if platform_family?('rhel')
 include_recipe 'apache2::mod_ssl'
 include_recipe 'apache2::mod_expires'
 include_recipe 'apache2::logrotate'
+include_recipe 'apache2::proxy_fcgi'
 
 bash 'logdir_existence_and_restart_apache2' do
   action :run

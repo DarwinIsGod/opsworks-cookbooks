@@ -34,7 +34,8 @@ when 'debian'
     "php-mail-mime",
     "php-db",
     "php-mdb2",
-    "php-html-common"
+    "php-html-common",
+    'php5-fpm'
   ]
 when 'rhel'
   packages = [
