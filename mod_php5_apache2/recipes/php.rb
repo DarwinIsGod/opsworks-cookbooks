@@ -54,8 +54,8 @@ node[:deploy].each do |application, deploy|
   else
     source_default_site_config = "#{node[:apache][:dir]}/sites-available/000-default"
   end 
-   apache_site source_default_site_config do
-      name 'default'
+   apache_site do
+      name source_default_site_config
       enable 'false'
     end
 end
