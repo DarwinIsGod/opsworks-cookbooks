@@ -50,9 +50,9 @@ node[:deploy].each do |application, deploy|
 
   # disable default virtual host so that the new app becomes the default virtual host
   if platform?('ubuntu') && node[:platform_version] == '14.04'
-    source_default_site_config = "#{node[:apache][:dir]}/sites-available/000-default.conf"
+    source_default_site_config = "000-default.conf"
   else
-    source_default_site_config = "#{node[:apache][:dir]}/sites-available/000-default"
+    source_default_site_config = "000-default"
   end 
    apache_site do
       name source_default_site_config
