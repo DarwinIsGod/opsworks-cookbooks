@@ -47,17 +47,15 @@ node[:deploy].each do |application, deploy|
     end
   end
 
-  # move away default virtual host so that the new app becomes the default virtual host
+  # disable default virtual host so that the new app becomes the default virtual host
   if platform?('ubuntu') && node[:platform_version] == '14.04'
-    source_default_site_config = "#{node[:apache][:dir]}/sites-enabled/000-default.conf"
-    target_default_site_config = "#{node[:apache][:dir]}/sites-enabled/zzz-default.conf"
+    source_default_site_config = "#{node[:apache][:dir]}/sites-available/000-default.conf"
   else
-    source_default_site_config = "#{node[:apache][:dir]}/sites-enabled/000-default"
-    target_default_site_config = "#{node[:apache][:dir]}/sites-enabled/zzz-default"
+    source_default_site_config = "#{node[:apache][:dir]}/sites-available/000-default"
   end
-  execute 'mv away default virtual host' do
-    action :run
-    command "mv #{source_default_site_config} #{target_default_site_config}"
+  
+  execute 'a2dissite default virtual host' do
+    a2dissite source_default_site_config
     notifies :reload, "service[apache2]", :delayed
     only_if do
       ::File.exists?(source_default_site_config)
