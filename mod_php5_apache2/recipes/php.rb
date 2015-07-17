@@ -1,6 +1,7 @@
 # setup Apache virtual host
 node[:deploy].each do |application, deploy|
   include_recipe 'apache2::service'
+  include_recipe 'apache2'
 
   if deploy[:application_type] != 'php'
     Chef::Log.debug("Skipping mod_php5_apache2::php application #{application} as it is not an PHP app")
@@ -55,10 +56,9 @@ node[:deploy].each do |application, deploy|
   end
   
   execute 'a2dissite default virtual host' do
-    a2dissite source_default_site_config
-    notifies :reload, "service[apache2]", :delayed
-    only_if do
-      ::File.exists?(source_default_site_config)
+    apache_site source_default_site_config do
+      name 'default'
+      enable 'false'
     end
   end
 end
