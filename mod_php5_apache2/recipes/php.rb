@@ -53,12 +53,9 @@ node[:deploy].each do |application, deploy|
     source_default_site_config = "#{node[:apache][:dir]}/sites-available/000-default.conf"
   else
     source_default_site_config = "#{node[:apache][:dir]}/sites-available/000-default"
-  end
-  
-  execute 'a2dissite default virtual host' do
-    apache_site source_default_site_config do
+  end 
+   apache_site source_default_site_config do
       name 'default'
       enable 'false'
     end
-  end
 end
